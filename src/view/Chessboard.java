@@ -249,5 +249,13 @@ public class Chessboard extends JComponent {
     public void huiQi(){
         Record record=huiQi.pollLast();
     }
+
+    public int getA() {
+        return a;
+    }
+
+    public void setA(int a) {
+        this.a = a;
+    }
 }
 

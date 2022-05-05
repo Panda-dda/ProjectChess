@@ -66,7 +66,9 @@ public class ChessGameFrame extends JFrame {
                 System.out.println("Click Restart");
                 int n=JOptionPane.showConfirmDialog(null,"Are you sure to restart","Confirm",JOptionPane.YES_NO_OPTION);
                 if (n==JOptionPane.YES_OPTION){
+                    chessboard.setA(1);
                     chessboard.Restarted();
+                    repaint();
 
                 }
             });
