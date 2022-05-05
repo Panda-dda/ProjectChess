@@ -2,6 +2,7 @@ package view;
 
 import controller.ClickController;
 import controller.GameController;
+import model.ChessColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,6 +68,8 @@ public class ChessGameFrame extends JFrame {
                 int n=JOptionPane.showConfirmDialog(null,"Are you sure to restart","Confirm",JOptionPane.YES_NO_OPTION);
                 if (n==JOptionPane.YES_OPTION){
                     chessboard.setA(1);
+                    chessboard.setCurrentColor(ChessColor.BLACK);
+                    statusLabel.setText("Turn For BlACK");
                     chessboard.Restarted();
                     repaint();
 

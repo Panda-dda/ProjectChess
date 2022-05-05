@@ -88,12 +88,10 @@ public class Chessboard extends JComponent {
             initPawnOnBoard(1,i,ChessColor.BLACK);
 
         }
-
-
-
-
-
     }
+
+
+
     public void Restarted(){
         a=1;
         removeAll();
@@ -126,6 +124,10 @@ public class Chessboard extends JComponent {
 
         }
 
+    }
+
+    public void setCurrentColor(ChessColor currentColor) {
+        this.currentColor = currentColor;
     }
 
     public ChessComponent[][] getChessComponents() {
