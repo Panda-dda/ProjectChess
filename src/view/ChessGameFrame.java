@@ -67,10 +67,9 @@ public class ChessGameFrame extends JFrame {
                 System.out.println("Click Restart");
                 int n=JOptionPane.showConfirmDialog(null,"Are you sure to restart","Confirm",JOptionPane.YES_NO_OPTION);
                 if (n==JOptionPane.YES_OPTION){
-                    chessboard.setA(1);
                     chessboard.setCurrentColor(ChessColor.BLACK);
-                    statusLabel.setText("Turn For BlACK");
                     chessboard.Restarted();
+                    System.out.printf("%d",chessboard.getA());
                     repaint();
 
                 }
@@ -85,12 +84,18 @@ public class ChessGameFrame extends JFrame {
      */
 
     private void addHelloButton() {
-        JButton button = new JButton("Show Hello Here");
-        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "Hello, world!"));
+        JButton button = new JButton("Store");
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
+        button.addActionListener(e -> {
+            System.out.println("Click store");
+            int n=JOptionPane.showConfirmDialog(null,"Are you sure to store","Confirm",JOptionPane.YES_NO_OPTION);
+            if (n==JOptionPane.YES_OPTION){
+
+            }
+        });
     }
 
     private void addLoadButton() {

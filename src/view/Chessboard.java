@@ -32,6 +32,7 @@ public class Chessboard extends JComponent {
     //all chessComponents in this chessboard are shared only one model controller
     private final ClickController clickController = new ClickController(this);
     private final int CHESS_SIZE;
+    private ChessComponent[] chessForStore=new ChessComponent[32];
 
     private LinkedList<Record> huiQi=new LinkedList<>();
 
@@ -123,6 +124,7 @@ public class Chessboard extends JComponent {
             initPawnOnBoard(1,i,ChessColor.BLACK);
 
         }
+        lable.setText("Turn For Black");
 
     }
 
@@ -151,26 +153,26 @@ public class Chessboard extends JComponent {
     public void swapChessComponents(ChessComponent chess1, ChessComponent chess2) {
         // Note that chess1 has higher priority, 'destroys' chess2 if exists.
         if (!(chess2 instanceof EmptySlotComponent)) {
-            Record record=new Record();
-            record.setChessComponent(chess1);
-            record.setStart(chess1.getChessboardPoint());
-            record.setEnd(chess2.getChessboardPoint());
-            record.setBeingEaten(chess2); huiQi.add(record);
+//            Record record=new Record();
+//            record.setChessComponent(chess1);
+//            record.setStart(chess1.getChessboardPoint());
+//            record.setEnd(chess2.getChessboardPoint());
+//            record.setBeingEaten(chess2);
+//            huiQi.add(record);
             remove(chess2);
 
             add(chess2 = new EmptySlotComponent(chess2.getChessboardPoint(), chess2.getLocation(), clickController, CHESS_SIZE));
-
         }
         chess1.swapLocation(chess2);
         int row1 = chess1.getChessboardPoint().getX(), col1 = chess1.getChessboardPoint().getY();
         chessComponents[row1][col1] = chess1;
         int row2 = chess2.getChessboardPoint().getX(), col2 = chess2.getChessboardPoint().getY();
         chessComponents[row2][col2] = chess2;
-        Record record=new Record();
-        record.setChessComponent(chess1);
-        record.setStart(chess1.getChessboardPoint());
-        record.setEnd(chess2.getChessboardPoint());
-        record.setBeingEaten(chess2); huiQi.add(record);
+//        Record record=new Record();
+//        record.setChessComponent(chess1);
+//        record.setStart(chess1.getChessboardPoint());
+//        record.setEnd(chess2.getChessboardPoint());
+//        record.setBeingEaten(chess2); huiQi.add(record);
 
         chess1.repaint();
         chess2.repaint();
@@ -182,6 +184,7 @@ public class Chessboard extends JComponent {
         else {
             lable.setText("Turn For Black");
         }
+
     }
 
     public void initiateEmptyChessboard() {
@@ -259,5 +262,6 @@ public class Chessboard extends JComponent {
     public void setA(int a) {
         this.a = a;
     }
+
 }
 
