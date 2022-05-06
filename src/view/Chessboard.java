@@ -262,6 +262,59 @@ public class Chessboard extends JComponent {
     public void setA(int a) {
         this.a = a;
     }
+    public String theStore(){
+        String theStringStore="";
+        for (int i=0;i<8;i++){
+            for (int j=0;j<8;j++){
+                ChessComponent ches=chessComponents[i][j];
+                if(ches instanceof KingChessComponent&&ches.getChessColor()==ChessColor.BLACK){
+                    theStringStore+="K";
+                }
+                if(ches instanceof KnightChessComponent&&ches.getChessColor()==ChessColor.BLACK){
+                    theStringStore+="N";
+                }
+                if (ches instanceof QueenChessComponent&&ches.getChessColor()==ChessColor.BLACK){
+                    theStringStore+="Q";
+                }
+                if (ches instanceof BishopChessComponent&&ches.getChessColor()==ChessColor.BLACK){
+                    theStringStore+="B";
+                }
+                if (ches instanceof RookChessComponent&&ches.getChessColor()==ChessColor.BLACK){
+                    theStringStore+="R";
+                }
+                if (ches instanceof PawnChessComponent&&ches.getChessColor()==ChessColor.BLACK){
+                    theStringStore+="P";
+                }
+
+
+
+                if(ches instanceof KingChessComponent&&ches.getChessColor()==ChessColor.WHITE){
+                    theStringStore+="k";
+                }
+                if(ches instanceof KnightChessComponent&&ches.getChessColor()==ChessColor.WHITE){
+                    theStringStore+="n";
+                }
+                if (ches instanceof QueenChessComponent&&ches.getChessColor()==ChessColor.WHITE){
+                    theStringStore+="q";
+                }
+                if (ches instanceof BishopChessComponent&&ches.getChessColor()==ChessColor.WHITE){
+                    theStringStore+="b";
+                }
+                if (ches instanceof RookChessComponent&&ches.getChessColor()==ChessColor.WHITE){
+                    theStringStore+="r";
+                }
+                if (ches instanceof PawnChessComponent&&ches.getChessColor()==ChessColor.WHITE){
+                    theStringStore+="p";
+                }
+                if (ches instanceof EmptySlotComponent ){
+                    theStringStore+=" ";
+                }
+            }
+            theStringStore+= "\n";
+        }
+        theStringStore+="\n"+a;
+        return theStringStore.toString();
+    }
 
 }
 

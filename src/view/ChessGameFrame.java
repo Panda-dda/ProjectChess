@@ -30,7 +30,7 @@ public class ChessGameFrame extends JFrame {
 
 
         addChessboard();
-        addHelloButton();
+
         addLoadButton();
 
     }
@@ -75,7 +75,7 @@ public class ChessGameFrame extends JFrame {
                 }
             });
 
-            }
+
 
 
 
@@ -83,20 +83,21 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
      */
 
-    private void addHelloButton() {
-        JButton button = new JButton("Store");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 120);
-        button.setSize(200, 60);
-        button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        add(button);
-        button.addActionListener(e -> {
+
+        JButton button1 = new JButton("Store");
+        button1.setLocation(HEIGTH, HEIGTH / 10 + 120);
+        button1.setSize(200, 60);
+        button1.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button1);
+        button1.addActionListener(e -> {
             System.out.println("Click store");
             int n=JOptionPane.showConfirmDialog(null,"Are you sure to store","Confirm",JOptionPane.YES_NO_OPTION);
             if (n==JOptionPane.YES_OPTION){
-
+                System.out.println(chessboard.theStore());
             }
         });
     }
+
 
     private void addLoadButton() {
         JButton button = new JButton("Load");
