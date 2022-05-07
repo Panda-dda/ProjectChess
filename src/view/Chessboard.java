@@ -312,7 +312,7 @@ public class Chessboard extends JComponent {
             }
             theStringStore+= "\n";
         }
-        theStringStore+="\n"+a;
+        theStringStore+=a;
         return theStringStore.toString();
     }
 
