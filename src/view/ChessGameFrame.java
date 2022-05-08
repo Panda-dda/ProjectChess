@@ -13,6 +13,7 @@ import java.io.IOException;
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
  */
 public class ChessGameFrame extends JFrame {
+    public int cc=0;
     //    public final Dimension FRAME_SIZE ;
     private final int WIDTH;
     private final int HEIGTH;
@@ -33,7 +34,7 @@ public class ChessGameFrame extends JFrame {
 
         addChessboard();
 
-        addLoadButton();
+
 
     }
 
@@ -100,22 +101,26 @@ public class ChessGameFrame extends JFrame {
                 saveAsFileWriter(chessboard.theStore());
             }
         });
-    }
 
 
-    private void addLoadButton() {
-        JButton button = new JButton("Load");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 240);
-        button.setSize(200, 60);
-        button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        add(button);
 
-        button.addActionListener(e -> {
+
+        JButton buttonLoad = new JButton("Load");
+        buttonLoad.setLocation(HEIGTH, HEIGTH / 10 + 240);
+        buttonLoad.setSize(200, 60);
+        buttonLoad.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(buttonLoad);
+
+        buttonLoad.addActionListener(e -> {
             System.out.println("Click load");
             String path = JOptionPane.showInputDialog(this,"Input Path here");
             gameController.loadGameFromFile(path);
+            chessboard.
+
+            repaint();
         });
     }
+
 
     private static   String savefile = "E:\\test.txt";
     private static void saveAsFileWriter(String content) {

@@ -245,7 +245,66 @@ public class Chessboard extends JComponent {
     }
 
     public void loadGame(List<String> chessData) {
+        initiateEmptyChessboard();
         chessData.forEach(System.out::println);
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                char theSimpleChess= chessData.get(i).charAt(j);
+                ChessComponent chess= chessComponents[i][j];
+                ChessboardPoint point = new ChessboardPoint(i,j);
+
+                if (theSimpleChess=='R'){
+                    initRookOnBoard(i,j,ChessColor.BLACK);
+                }
+                if (theSimpleChess=='K'){
+                    initKingOnBoard(i,j,ChessColor.BLACK);
+                }
+                if (theSimpleChess=='Q'){
+                    initQueenOnBoard(i,j,ChessColor.BLACK);
+                }
+                if (theSimpleChess=='N'){
+                    initKnightOnBoard(i,j,ChessColor.BLACK);
+                }
+                if(theSimpleChess=='B'){
+                    initBishopOnBoard(i,j,ChessColor.BLACK);
+                }
+                if(theSimpleChess=='P'){
+                    initPawnOnBoard(i,j,ChessColor.BLACK);
+                }
+
+
+                if (theSimpleChess=='r'){
+                    initRookOnBoard(i,j,ChessColor.WHITE);
+                }
+                if (theSimpleChess=='k'){
+                    initKingOnBoard(i,j,ChessColor.WHITE);
+                }
+                if (theSimpleChess=='q'){
+                    initQueenOnBoard(i,j,ChessColor.WHITE);
+                }
+                if (theSimpleChess=='n'){
+                    initKnightOnBoard(i,j,ChessColor.WHITE);
+                }
+                if(theSimpleChess=='b'){
+                    initBishopOnBoard(i,j,ChessColor.WHITE);
+                }
+                if(theSimpleChess=='p'){
+                    initPawnOnBoard(i,j,ChessColor.WHITE);
+                }
+            }
+        }
+        a=chessData.get(8).charAt(0)-'0';
+
+        if (a%2==0){
+            setCurrentColor(ChessColor.WHITE);
+            lable.setText("Turn For White");
+        }
+        else{
+            setCurrentColor(ChessColor.BLACK);
+            lable.setText("Turn For Black");
+        }
+
+
     }
 
     public void setHuiQi(LinkedList<Record> huiQi) {
