@@ -115,9 +115,15 @@ public class ChessGameFrame extends JFrame {
             System.out.println("Click load");
             String path = JOptionPane.showInputDialog(this,"Input Path here");
             gameController.loadGameFromFile(path);
-            chessboard.
+            if(chessboard.isLoadTest()){
+                repaint();
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "the message is not correct？", "Warnings", JOptionPane.WARNING_MESSAGE);
+            }
 
-            repaint();
+
+
         });
     }
 

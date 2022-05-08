@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class Chessboard extends JComponent {
     private int a=1;
+    private boolean loadTest=true;
     /**
      * CHESSBOARD_SIZE： 棋盘是8 * 8的
      * <br>
@@ -245,66 +246,72 @@ public class Chessboard extends JComponent {
     }
 
     public void loadGame(List<String> chessData) {
-        initiateEmptyChessboard();
-        chessData.forEach(System.out::println);
-        for(int i=0;i<8;i++){
-            for(int j=0;j<8;j++){
-                char theSimpleChess= chessData.get(i).charAt(j);
-                ChessComponent chess= chessComponents[i][j];
-                ChessboardPoint point = new ChessboardPoint(i,j);
+        boolean test = theLoadTest( chessData);
 
-                if (theSimpleChess=='R'){
-                    initRookOnBoard(i,j,ChessColor.BLACK);
-                }
-                if (theSimpleChess=='K'){
-                    initKingOnBoard(i,j,ChessColor.BLACK);
-                }
-                if (theSimpleChess=='Q'){
-                    initQueenOnBoard(i,j,ChessColor.BLACK);
-                }
-                if (theSimpleChess=='N'){
-                    initKnightOnBoard(i,j,ChessColor.BLACK);
-                }
-                if(theSimpleChess=='B'){
-                    initBishopOnBoard(i,j,ChessColor.BLACK);
-                }
-                if(theSimpleChess=='P'){
-                    initPawnOnBoard(i,j,ChessColor.BLACK);
-                }
+        if(!test){
+                loadTest=false;
+        }
+        else {
+            loadTest=true;
+            initiateEmptyChessboard();
+            chessData.forEach(System.out::println);
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    char theSimpleChess = chessData.get(i).charAt(j);
+                    ChessComponent chess = chessComponents[i][j];
+                    ChessboardPoint point = new ChessboardPoint(i, j);
+
+                    if (theSimpleChess == 'R') {
+                        initRookOnBoard(i, j, ChessColor.BLACK);
+                    }
+                    if (theSimpleChess == 'K') {
+                        initKingOnBoard(i, j, ChessColor.BLACK);
+                    }
+                    if (theSimpleChess == 'Q') {
+                        initQueenOnBoard(i, j, ChessColor.BLACK);
+                    }
+                    if (theSimpleChess == 'N') {
+                        initKnightOnBoard(i, j, ChessColor.BLACK);
+                    }
+                    if (theSimpleChess == 'B') {
+                        initBishopOnBoard(i, j, ChessColor.BLACK);
+                    }
+                    if (theSimpleChess == 'P') {
+                        initPawnOnBoard(i, j, ChessColor.BLACK);
+                    }
 
 
-                if (theSimpleChess=='r'){
-                    initRookOnBoard(i,j,ChessColor.WHITE);
-                }
-                if (theSimpleChess=='k'){
-                    initKingOnBoard(i,j,ChessColor.WHITE);
-                }
-                if (theSimpleChess=='q'){
-                    initQueenOnBoard(i,j,ChessColor.WHITE);
-                }
-                if (theSimpleChess=='n'){
-                    initKnightOnBoard(i,j,ChessColor.WHITE);
-                }
-                if(theSimpleChess=='b'){
-                    initBishopOnBoard(i,j,ChessColor.WHITE);
-                }
-                if(theSimpleChess=='p'){
-                    initPawnOnBoard(i,j,ChessColor.WHITE);
+                    if (theSimpleChess == 'r') {
+                        initRookOnBoard(i, j, ChessColor.WHITE);
+                    }
+                    if (theSimpleChess == 'k') {
+                        initKingOnBoard(i, j, ChessColor.WHITE);
+                    }
+                    if (theSimpleChess == 'q') {
+                        initQueenOnBoard(i, j, ChessColor.WHITE);
+                    }
+                    if (theSimpleChess == 'n') {
+                        initKnightOnBoard(i, j, ChessColor.WHITE);
+                    }
+                    if (theSimpleChess == 'b') {
+                        initBishopOnBoard(i, j, ChessColor.WHITE);
+                    }
+                    if (theSimpleChess == 'p') {
+                        initPawnOnBoard(i, j, ChessColor.WHITE);
+                    }
                 }
             }
-        }
-        a=chessData.get(8).charAt(0)-'0';
+            a = chessData.get(8).charAt(0) - '0';
 
-        if (a%2==0){
-            setCurrentColor(ChessColor.WHITE);
-            lable.setText("Turn For White");
-        }
-        else{
-            setCurrentColor(ChessColor.BLACK);
-            lable.setText("Turn For Black");
-        }
+            if (a % 2 == 0) {
+                setCurrentColor(ChessColor.WHITE);
+                lable.setText("Turn For White");
+            } else {
+                setCurrentColor(ChessColor.BLACK);
+                lable.setText("Turn For Black");
+            }
 
-
+        }
     }
 
     public void setHuiQi(LinkedList<Record> huiQi) {
@@ -322,6 +329,7 @@ public class Chessboard extends JComponent {
         this.a = a;
     }
     public String theStore(){
+
         String theStringStore="";
         for (int i=0;i<8;i++){
             for (int j=0;j<8;j++){
@@ -374,6 +382,52 @@ public class Chessboard extends JComponent {
         theStringStore+=a;
         return theStringStore.toString();
     }
+    public boolean theLoadTest(List<String> chessData){//test the load is right or not ,
+                                                        //contains the length 8*8 ,the a--the turn,
+        boolean theInt=true;
+        boolean theILength=true;
+        boolean theChessName=true;
 
+        if (chessData.size()!=9){
+            return  false;
+        }
+        else {
+            for (int i=0;i<8;i++){
+                if (chessData.get(i).length()!=8){
+                    theILength=false;
+                    break;
+                }
+            }
+            for(int i=0;i<chessData.get(8).length();i++){
+                int chr=chessData.get(8).charAt(i);
+
+                if (chr<48||chr>57){
+                    theInt=false;
+                    break;
+                }
+            }
+            for (int i=0;i<8;i++){
+                for(int j=0;j<8;j++){
+                    char chess=chessData.get(i).charAt(j);
+                    if (chess!='r'&&chess!='R'&&chess!='K'&&chess!='Q'&&chess!='k'&&chess!='q'&&chess!='B'&&chess!='b'&&chess!='N'&&chess!='n'&&chess!='P'&&chess!='p'&&chess!=' '){
+                        theChessName=false;
+                        break;
+                    }
+                }
+            }
+
+            if (theInt&&theILength&&theChessName){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+    }
+
+    public boolean isLoadTest() {
+        return loadTest;
+    }
 }
 
