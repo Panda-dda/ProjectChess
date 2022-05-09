@@ -46,7 +46,7 @@ public class PawnChessComponent extends ChessComponent{
         ChessboardPoint source = getChessboardPoint();
         if (this.getChessColor()==ChessColor.BLACK){
             if (source.getX()==1){
-                if ((destination.getX()-source.getX()==1||destination.getX()-source.getX()==2)&&(destination.getY()==destination.getY())){
+                if ((destination.getX()-source.getX()==1||destination.getX()-source.getX()==2)&&(destination.getY()==source.getY())){
                     return true;}
                 else{return false;}
             }else{
@@ -64,7 +64,7 @@ public class PawnChessComponent extends ChessComponent{
         }
         if (this.getChessColor()==ChessColor.WHITE){
             if (source.getX()==6){
-                if ((destination.getX()-source.getX()==-1||destination.getX()-source.getX()==-2)&&(destination.getY()==destination.getY())){
+                if ((destination.getX()-source.getX()==-1||destination.getX()-source.getX()==-2)&&(destination.getY()==source.getY())){
                     return true;}
                 else{return false;}
             }else{

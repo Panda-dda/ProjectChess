@@ -5,7 +5,11 @@ import controller.GameController;
 import model.ChessColor;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -98,7 +102,40 @@ public class ChessGameFrame extends JFrame {
             if (n==JOptionPane.YES_OPTION){
                 System.out.println(chessboard.theStore());
                 String a=chessboard.theStore();
-                saveAsFileWriter(chessboard.theStore());
+//                saveAsFileWriter(chessboard.theStore());
+
+
+
+
+//                JFileChooser fileChooser = new JFileChooser();
+////后缀名过滤器
+//                FileNameExtensionFilter filter = new FileNameExtensionFilter("标签文件(*.txt)", "txt");
+//                fileChooser.setFileFilter(filter);
+//// 在容器上打开文件选择器
+//                fileChooser.showSaveDialog(fileChooser);
+//                File f=fileChooser.getSelectedFile();
+////字节输出流
+//                FileOutputStream fos = null;
+//                try {
+//                    String fname = f.getName(); //从文件名输入框中获取文件名
+//
+//
+//
+//                    //创建文件
+//                    File file=new File(fileChooser.getCurrentDirectory()+"/"+fname+".txt");
+//                    fos = new FileOutputStream(file);
+//                    //写入文件操作
+//                    String Datas = chessboard.theStore();
+//                    fos.write(Datas.getBytes());
+//                    fos.close();
+//
+//                } catch (IOException e1) {
+//                    System.err.println("IO异常");
+//                    e1.printStackTrace();
+//                }
+
+                saveFile(a);
+
             }
         });
 
@@ -111,38 +148,126 @@ public class ChessGameFrame extends JFrame {
         buttonLoad.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(buttonLoad);
 
-        buttonLoad.addActionListener(e -> {
-            System.out.println("Click load");
-            String path = JOptionPane.showInputDialog(this,"Input Path here");
-            gameController.loadGameFromFile(path);
-            if(chessboard.isLoadTest()){
+//        buttonLoad.addActionListener(e -> {
+//            System.out.println("Click load");
+//            String path = JOptionPane.showInputDialog(this,"Input Path here");
+//            boolean pathForm=true;
+//
+//                if ((path.charAt(path.length()-3)!='t')||(path.charAt(path.length()-2)!='x')||(path.charAt(path.length()-1)!='t')){
+//                    pathForm=false;
+//                }
+//
+//
+//            gameController.loadGameFromFile(path);
+//            if(chessboard.isLoadTest()&&pathForm){
+//
+//                repaint();
+//            }
+//            else {
+//                JOptionPane.showMessageDialog(null, "the message is not correct!", "Warnings", JOptionPane.WARNING_MESSAGE);
+//            }
+
+
+
+//        });
+
+
+        buttonLoad.addActionListener(e->{
+                // 按钮点击事件
+
+
+                JFileChooser chooser = new JFileChooser(); // 设置选择器
+                chooser.setMultiSelectionEnabled(false); // 设为多选
+                int returnVal = chooser.showOpenDialog(buttonLoad); // 是否打开文件选择框
+                System.out.println("returnVal=" + returnVal);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION) { // 如果符合文件类型
+                    boolean pathForm=true;
+                    String filepath = chooser.getSelectedFile().getAbsolutePath(); // 获取绝对路径
+                    System.out.println(filepath);
+
+                    System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
+                    String path =filepath;
+                    System.out.println(path);// 输出相对路径
+                     if ((path.charAt(path.length()-3)!='t')||(path.charAt(path.length()-2)!='x')||(path.charAt(path.length()-1)!='t')){
+                    pathForm=false;
+                         JOptionPane.showMessageDialog(null, "the message is not correct!", "Warnings", JOptionPane.WARNING_MESSAGE);
+
+                }
+                     else {
+                    gameController.loadGameFromFile(path);
+
+
+
+            if(chessboard.isLoadTest()&&pathForm){
+
                 repaint();
             }
             else {
-                JOptionPane.showMessageDialog(null, "the message is not correct？", "Warnings", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "the message is not correct!", "Warnings", JOptionPane.WARNING_MESSAGE);
             }
-
+                }}
 
 
         });
     }
 
 
-    private static   String savefile = "E:\\test.txt";
-    private static void saveAsFileWriter(String content) {
+//    private static   String savefile = "E:\\test.txt";
+//    private static void saveAsFileWriter(String content) {
+//
+//        FileWriter fwriter = null;
+//        try {
+//            fwriter = new FileWriter(savefile);
+//            fwriter.write(content);
+//        } catch (IOException ex) {
+//              ex.printStackTrace();
+//        } finally {
+//            try {
+//                fwriter.flush();
+//                fwriter.close();
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//    }
 
-        FileWriter fwriter = null;
-        try {
-            fwriter = new FileWriter(savefile);
-            fwriter.write(content);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
+    public void saveFile(String a) {
+        //弹出文件选择框
+        JFileChooser chooser = new JFileChooser();
+
+        //后缀名过滤器
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "(*.txt)", "txt");
+        chooser.setFileFilter(filter);
+
+        //下面的方法将阻塞，直到【用户按下保存按钮且“文件名”文本框不为空】或【用户按下取消按钮】
+        int option = chooser.showSaveDialog(null);
+        if(option==JFileChooser.APPROVE_OPTION){	//假如用户选择了保存
+            File file = chooser.getSelectedFile();
+
+            String fname = chooser.getName(file);	//从文件名输入框中获取文件名
+
+            //假如用户填写的文件名不带我们制定的后缀名，那么我们给它添上后缀
+            if(fname.indexOf(".txt")==-1){
+                file = new File(chooser.getCurrentDirectory(),fname+".txt");
+                System.out.println("renamed");
+                System.out.println(file.getName());
+            }
+
             try {
-                fwriter.flush();
-                fwriter.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                FileOutputStream fos = new FileOutputStream(file);
+
+                //写文件操作……
+                String Datas = a;
+                    fos.write(Datas.getBytes());
+                    fos.close();
+
+                fos.close();
+
+            } catch (IOException e) {
+                System.err.println("IO异常");
+                e.printStackTrace();
             }
         }
     }
