@@ -12,6 +12,7 @@ import java.io.IOException;
  * 这个类是一个抽象类，主要表示8*8棋盘上每个格子的棋子情况，当前有两个子类继承它，分别是EmptySlotComponent(空棋子)和RookChessComponent(车)。
  */
 public abstract class ChessComponent extends JComponent {
+
     /**
      * CHESSGRID_SIZE: 主要用于确定每个棋子在页面中显示的大小。
      * <br>
@@ -20,7 +21,7 @@ public abstract class ChessComponent extends JComponent {
      * 因此每个棋子占用的形状是一个正方形，大小是50*50
      */
 
-//    private static final Dimension CHESSGRID_SIZE = new Dimension(1080 / 4 * 3 / 8, 1080 / 4 * 3 / 8);
+    private static final Dimension CHESSGRID_SIZE = new Dimension(1080 / 4 * 3 / 8, 1080 / 4 * 3 / 8);
     private static final Color[] BACKGROUND_COLORS = {Color.WHITE, Color.BLACK};
     /**
      * handle click event
@@ -80,8 +81,6 @@ public abstract class ChessComponent extends JComponent {
         setLocation(point2);
         another.setChessboardPoint(chessboardPoint1);
         another.setLocation(point1);
-
-
     }
 
     /**
@@ -123,5 +122,4 @@ public abstract class ChessComponent extends JComponent {
         g.setColor(squareColor);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
-
 }
