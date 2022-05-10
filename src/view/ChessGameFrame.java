@@ -6,12 +6,30 @@ import model.ChessColor;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
+
+import java.applet.AudioClip;
+import java.io.*;
+import java.applet.Applet;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.*;
+import javazoom.jl.player.advanced.AdvancedPlayer;
+import javazoom.jl.player.advanced.PlaybackEvent;
+import javazoom.jl.player.advanced.PlaybackListener;
+
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -24,6 +42,8 @@ public class ChessGameFrame extends JFrame {
     public final int CHESSBOARD_SIZE;
     private GameController gameController;
 
+
+
     public ChessGameFrame(int width, int height) {
         setTitle("2022 CS102A Project Demo"); //设置标题
         this.WIDTH = width;
@@ -35,8 +55,8 @@ public class ChessGameFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
 
-
         addChessboard();
+
 
 
 
@@ -47,6 +67,8 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中添加棋盘
      */
     private void addChessboard() {
+
+
         Chessboard chessboard = new Chessboard(CHESSBOARD_SIZE, CHESSBOARD_SIZE);
         gameController = new GameController(chessboard);
         chessboard.setLocation(HEIGTH / 10, HEIGTH / 10);
@@ -172,7 +194,7 @@ public class ChessGameFrame extends JFrame {
 //        });
 
 
-        buttonLoad.addActionListener(e->{
+        buttonLoad.addActionListener(e->{//csdn
                 // 按钮点击事件
 
 
@@ -232,7 +254,7 @@ public class ChessGameFrame extends JFrame {
 //        }
 //    }
 
-    public void saveFile(String a) {
+    public void saveFile(String a) {//csdn
         //弹出文件选择框
         JFileChooser chooser = new JFileChooser();
 
@@ -271,6 +293,54 @@ public class ChessGameFrame extends JFrame {
             }
         }
     }
+
+
+//    static void playMusic(){//背景音乐播放
+//        try {
+//            URL cb;
+//            File f = new File("F:\\QQmusicDownLoad\\music.wav"); // 引号里面的是音乐文件所在的路径
+//            cb = f.toURL();
+//            AudioClip aau;
+//            aau = Applet.newAudioClip(cb);
+//
+//            aau.play();
+//            aau.loop();//循环播放
+//            System.out.println("可以播放");
+//            // 循环播放 aau.play()
+//            //单曲 aau.stop()停止播放
+//
+//        } catch (MalformedURLException e) {
+//
+//            e.printStackTrace();
+//        }
+//    }
+
+
+//    static void playMusic(){//背景音乐播放
+//        try {
+//            URL cb;
+//            File f = new File("F:\\QQmusicDownLoad\\music.wav"); // 引号里面的是音乐文件所在的路径
+//            cb = f.toURL();
+//            AudioClip aau;
+//            aau = Applet.newAudioClip(cb);
+//
+//            aau.play();
+//            aau.loop();//循环播放
+//            System.out.println("可以播放");
+//            // 循环播放 aau.play()
+//            //单曲 aau.stop()停止播放
+//
+//        } catch (MalformedURLException e) {
+//
+//            e.printStackTrace();
+//        }
+//    }
+
+
+
+
+
+
 
 
 }

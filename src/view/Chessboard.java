@@ -153,6 +153,11 @@ public class Chessboard extends JComponent {
 
     public void swapChessComponents(ChessComponent chess1, ChessComponent chess2) {
         // Note that chess1 has higher priority, 'destroys' chess2 if exists.
+        Music play0 = new Music("F:\\\\music.mp3");
+        play0.start();  //开启
+
+
+
         if (!(chess2 instanceof EmptySlotComponent)) {
 //            Record record=new Record();
 //            record.setChessComponent(chess1);
@@ -254,7 +259,7 @@ public class Chessboard extends JComponent {
         else {
             loadTest=true;
             initiateEmptyChessboard();
-            chessData.forEach(System.out::println);
+//            chessData.forEach(System.out::println);
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     char theSimpleChess = chessData.get(i).charAt(j);
