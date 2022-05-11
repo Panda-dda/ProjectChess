@@ -4,12 +4,14 @@ import controller.ClickController;
 import controller.GameController;
 import model.ChessColor;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -24,6 +26,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.nio.channels.ScatteringByteChannel;
+
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.*;
 import javazoom.jl.player.advanced.AdvancedPlayer;
@@ -44,18 +48,55 @@ public class ChessGameFrame extends JFrame {
 
 
 
+
+
+
     public ChessGameFrame(int width, int height) {
         setTitle("2022 CS102A Project Demo"); //设置标题
         this.WIDTH = width;
         this.HEIGTH = height;
         this.CHESSBOARD_SIZE = HEIGTH * 4 / 5;
 
-        setSize(WIDTH, HEIGTH);
+
+//        int fraWidth=this.getWidth();
+//        int fraHeight=this.getHeight();
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//        int scWidth=screenSize.width;
+//        int scHight=screenSize.height;
+////        this.setSize(scWidth,scHight);
+//
+//        float proportionW=scWidth/fraWidth;
+//        float proportionH=scHight/fraHeight;
+//
+//
+//          FrameShow.modifyComponentSize(this, proportionW,proportionH);
+//        this.toFront();
+
+
+
+
+       setSize(WIDTH, HEIGTH);
         setLocationRelativeTo(null); // Center the window.
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
 
         addChessboard();
+
+
+        ImageIcon imag=new ImageIcon("images/background.png");
+//        JLabel jb=new JLabel(imag);
+//
+//        jb.setBounds(0,0,getWidth(),getHeight());
+//
+//        add(jb);
+
+        Image image=imag.getImage();
+        Image doSomImage=image.getScaledInstance(WIDTH,HEIGTH,Image.SCALE_FAST);
+        ImageIcon tureBackground = new ImageIcon(doSomImage);
+
+        JLabel jb=new JLabel(tureBackground);
+        jb.setBounds(0,0,getWidth(),getHeight());
+        add(jb);
 
 
 
@@ -195,24 +236,22 @@ public class ChessGameFrame extends JFrame {
 
 
         buttonLoad.addActionListener(e->{//csdn
-                // 按钮点击事件
 
-
-                JFileChooser chooser = new JFileChooser(); // 设置选择器
+                JFileChooser chooser = new JFileChooser();
                 chooser.setMultiSelectionEnabled(false); // 设为多选
-                int returnVal = chooser.showOpenDialog(buttonLoad); // 是否打开文件选择框
+                int returnVal = chooser.showOpenDialog(buttonLoad); // 是否打开文件选择框，选择保存是0，退出和1
                 System.out.println("returnVal=" + returnVal);
 
-                if (returnVal == JFileChooser.APPROVE_OPTION) { // 如果符合文件类型
+                if (returnVal == JFileChooser.APPROVE_OPTION) { // 电点击保存
                     boolean pathForm=true;
-                    String filepath = chooser.getSelectedFile().getAbsolutePath(); // 获取绝对路径
+                    String filepath = chooser.getSelectedFile().getAbsolutePath();
                     System.out.println(filepath);
 
                     System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
                     String path =filepath;
                     System.out.println(path);// 输出相对路径
                      if ((path.charAt(path.length()-3)!='t')||(path.charAt(path.length()-2)!='x')||(path.charAt(path.length()-1)!='t')){
-                    pathForm=false;
+                         pathForm=false;
                          JOptionPane.showMessageDialog(null, "the message is not correct!", "Warnings", JOptionPane.WARNING_MESSAGE);
 
                 }
@@ -254,38 +293,34 @@ public class ChessGameFrame extends JFrame {
 //        }
 //    }
 
-    public void saveFile(String a) {//csdn
+    public void saveFile(String data) {//csdn
         //弹出文件选择框
         JFileChooser chooser = new JFileChooser();
 
         //后缀名过滤器
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "(*.txt)", "txt");
-        chooser.setFileFilter(filter);
+//        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+//                "(*.txt)", "txt");
+//        chooser.setFileFilter(filter);
 
         //下面的方法将阻塞，直到【用户按下保存按钮且“文件名”文本框不为空】或【用户按下取消按钮】
         int option = chooser.showSaveDialog(null);
         if(option==JFileChooser.APPROVE_OPTION){	//假如用户选择了保存
             File file = chooser.getSelectedFile();
 
-            String fname = chooser.getName(file);	//从文件名输入框中获取文件名
+            String fileName = chooser.getName(file);	//从文件名输入框中获取文件名
 
             //假如用户填写的文件名不带我们制定的后缀名，那么我们给它添上后缀
-            if(fname.indexOf(".txt")==-1){
-                file = new File(chooser.getCurrentDirectory(),fname+".txt");
+            if(fileName.indexOf(".txt")==-1){
+                file = new File(chooser.getCurrentDirectory(),fileName+".txt");
                 System.out.println("renamed");
                 System.out.println(file.getName());
             }
 
             try {
                 FileOutputStream fos = new FileOutputStream(file);
-
-                //写文件操作……
-                String Datas = a;
-                    fos.write(Datas.getBytes());
+                    fos.write(data.getBytes());
                     fos.close();
 
-                fos.close();
 
             } catch (IOException e) {
                 System.err.println("IO异常");
@@ -314,33 +349,5 @@ public class ChessGameFrame extends JFrame {
 //            e.printStackTrace();
 //        }
 //    }
-
-
-//    static void playMusic(){//背景音乐播放
-//        try {
-//            URL cb;
-//            File f = new File("F:\\QQmusicDownLoad\\music.wav"); // 引号里面的是音乐文件所在的路径
-//            cb = f.toURL();
-//            AudioClip aau;
-//            aau = Applet.newAudioClip(cb);
 //
-//            aau.play();
-//            aau.loop();//循环播放
-//            System.out.println("可以播放");
-//            // 循环播放 aau.play()
-//            //单曲 aau.stop()停止播放
-//
-//        } catch (MalformedURLException e) {
-//
-//            e.printStackTrace();
-//        }
-//    }
-
-
-
-
-
-
-
-
 }

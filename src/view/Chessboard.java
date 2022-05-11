@@ -1,11 +1,16 @@
 package view;
 
 
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 import model.*;
 import controller.ClickController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -153,8 +158,7 @@ public class Chessboard extends JComponent {
 
     public void swapChessComponents(ChessComponent chess1, ChessComponent chess2) {
         // Note that chess1 has higher priority, 'destroys' chess2 if exists.
-        Music play0 = new Music("F:\\\\music.mp3");
-        play0.start();  //开启
+
 
 
 
@@ -179,7 +183,8 @@ public class Chessboard extends JComponent {
 //        record.setStart(chess1.getChessboardPoint());
 //        record.setEnd(chess2.getChessboardPoint());
 //        record.setBeingEaten(chess2); huiQi.add(record);
-
+        SoundOfChess play0 = new SoundOfChess("D:\\新建文件夹\\下棋.mp3");
+        play0.start();
         chess1.repaint();
         chess2.repaint();
 
@@ -434,5 +439,24 @@ public class Chessboard extends JComponent {
     public boolean isLoadTest() {
         return loadTest;
     }
-}
 
+}
+class SoundOfChess extends Thread{
+    Player player;
+    String music;
+    public SoundOfChess(String file) {
+        this.music = file;
+    }
+    public void run() {
+        try {
+            play();
+        } catch (FileNotFoundException | JavaLayerException e) {
+            e.printStackTrace();
+        }
+    }
+    public void play() throws FileNotFoundException, JavaLayerException {
+        BufferedInputStream buffer = new BufferedInputStream(new FileInputStream(music));
+        player = new Player(buffer);
+        player.play();
+    }
+}
