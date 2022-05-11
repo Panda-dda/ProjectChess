@@ -282,6 +282,29 @@ public class ChessGameFrame extends JFrame {
 
 
         });
+
+
+
+        JButton huiqi=new JButton("HuiQi");
+        huiqi.setLocation(HEIGTH, HEIGTH / 10 + 600);
+        huiqi.setSize(200, 60);
+        huiqi.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(huiqi);
+        huiqi.addActionListener(e -> {
+            if (chessboard.getIntStoreHuiQI()<2){
+                JOptionPane.showMessageDialog(null, "已经是开始状态", "Warnings", JOptionPane.WARNING_MESSAGE);
+            }
+            else {
+            String daiFuYuanChessBoard=chessboard.ForHUi();
+            String[] data=daiFuYuanChessBoard.split("\n");
+            chessboard.HuiQIGame(data);
+            repaint();
+
+            }
+
+        });
+
+
     }
 
 

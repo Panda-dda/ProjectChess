@@ -11,6 +11,7 @@ import java.awt.*;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class Chessboard extends JComponent {
     private int a=1;
     private boolean loadTest=true;
+    ArrayList<String> storeHuiQI=new ArrayList<>();
     /**
      * CHESSBOARD_SIZE： 棋盘是8 * 8的
      * <br>
@@ -60,12 +62,8 @@ public class Chessboard extends JComponent {
         this.lable = lable;
     }
     public void setRestarted(){
-
-        System.out.println("reStarted");
         initiateEmptyChessboard();
         Init();
-        System.out.println("After restarted");
-
     }
 
     public Chessboard(int width, int height) {
@@ -73,10 +71,6 @@ public class Chessboard extends JComponent {
         setSize(width, height);
         CHESS_SIZE = width / 8;
         System.out.printf("chessboard size = %d, chess size = %d\n", width, CHESS_SIZE);
-
-
-
-
         initiateEmptyChessboard();
         Init();
 
@@ -110,11 +104,13 @@ public class Chessboard extends JComponent {
             initPawnOnBoard(1,i,ChessColor.BLACK);
 
         }
+        storeHuiQI.add(theStore());
     }
 
 
 
     public void Restarted(){
+        storeHuiQI.clear();
         a=1;
         removeAll();
         initiateEmptyChessboard();
@@ -146,6 +142,7 @@ public class Chessboard extends JComponent {
 
         }
         lable.setText("Turn For Black");
+        storeHuiQI.add(theStore());
 
     }
 
@@ -210,6 +207,9 @@ public class Chessboard extends JComponent {
         else {
             lable.setText("Turn For Black");
         }
+
+        storeHuiQI.add(theStore());
+        System.out.println(theStore());
 
     }
 
@@ -337,7 +337,72 @@ public class Chessboard extends JComponent {
             }
 
         }
+        storeHuiQI.add(theStore());
     }
+    public void HuiQIGame(String[] chessData) {
+
+            initiateEmptyChessboard();
+//            chessData.forEach(System.out::println);
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    char theSimpleChess = chessData[i].charAt(j);
+                    ChessComponent chess = chessComponents[i][j];
+                    ChessboardPoint point = new ChessboardPoint(i, j);
+
+                    if (theSimpleChess == 'R') {
+                        initRookOnBoard(i, j, ChessColor.BLACK);
+                    }
+                    if (theSimpleChess == 'K') {
+                        initKingOnBoard(i, j, ChessColor.BLACK);
+                    }
+                    if (theSimpleChess == 'Q') {
+                        initQueenOnBoard(i, j, ChessColor.BLACK);
+                    }
+                    if (theSimpleChess == 'N') {
+                        initKnightOnBoard(i, j, ChessColor.BLACK);
+                    }
+                    if (theSimpleChess == 'B') {
+                        initBishopOnBoard(i, j, ChessColor.BLACK);
+                    }
+                    if (theSimpleChess == 'P') {
+                        initPawnOnBoard(i, j, ChessColor.BLACK);
+                    }
+
+
+                    if (theSimpleChess == 'r') {
+                        initRookOnBoard(i, j, ChessColor.WHITE);
+                    }
+                    if (theSimpleChess == 'k') {
+                        initKingOnBoard(i, j, ChessColor.WHITE);
+                    }
+                    if (theSimpleChess == 'q') {
+                        initQueenOnBoard(i, j, ChessColor.WHITE);
+                    }
+                    if (theSimpleChess == 'n') {
+                        initKnightOnBoard(i, j, ChessColor.WHITE);
+                    }
+                    if (theSimpleChess == 'b') {
+                        initBishopOnBoard(i, j, ChessColor.WHITE);
+                    }
+                    if (theSimpleChess == 'p') {
+                        initPawnOnBoard(i, j, ChessColor.WHITE);
+                    }
+                }
+            }
+            a = chessData[8].charAt(0) - '0';
+
+            if (a % 2 == 0) {
+                setCurrentColor(ChessColor.WHITE);
+                lable.setText("Turn For White");
+            } else {
+                setCurrentColor(ChessColor.BLACK);
+                lable.setText("Turn For Black");
+            }
+
+
+    }
+
+
 
     public void setHuiQi(LinkedList<Record> huiQi) {
         this.huiQi = huiQi;
@@ -454,8 +519,35 @@ public class Chessboard extends JComponent {
     public boolean isLoadTest() {
         return loadTest;
     }
+    public String ForHUi(){
 
+       int size=storeHuiQI.size();
+       if (size>=2){
+
+
+       String QianYibu=storeHuiQI.get(size-2);
+
+       storeHuiQI.remove(size-1);
+       return QianYibu;}
+      return null;
+
+    }
+
+
+    public int getIntStoreHuiQI() {
+        return storeHuiQI.size();
+    }
 }
+
+
+
+
+
+
+
+
+
+
 class SoundOfChess extends Thread{
     Player player;
     String music;
@@ -474,4 +566,13 @@ class SoundOfChess extends Thread{
         player = new Player(buffer);
         player.play();
     }
+
+
+
+
+
+
+
+
+
 }
