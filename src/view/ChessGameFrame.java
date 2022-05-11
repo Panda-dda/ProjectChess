@@ -45,6 +45,8 @@ public class ChessGameFrame extends JFrame {
     private final int HEIGTH;
     public final int CHESSBOARD_SIZE;
     private GameController gameController;
+    private JLabel jb;
+
 
 
 
@@ -80,6 +82,9 @@ public class ChessGameFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
 
+
+        addChangeBackground();
+
         addChessboard();
 
 
@@ -94,9 +99,15 @@ public class ChessGameFrame extends JFrame {
         Image doSomImage=image.getScaledInstance(WIDTH,HEIGTH,Image.SCALE_FAST);
         ImageIcon tureBackground = new ImageIcon(doSomImage);
 
-        JLabel jb=new JLabel(tureBackground);
+        jb=new JLabel(tureBackground);
         jb.setBounds(0,0,getWidth(),getHeight());
         add(jb);
+
+
+
+
+
+
 
 
 
@@ -242,7 +253,7 @@ public class ChessGameFrame extends JFrame {
                 int returnVal = chooser.showOpenDialog(buttonLoad); // 是否打开文件选择框，选择保存是0，退出和1
                 System.out.println("returnVal=" + returnVal);
 
-                if (returnVal == JFileChooser.APPROVE_OPTION) { // 电点击保存
+                if (returnVal == JFileChooser.APPROVE_OPTION) { //点击确定
                     boolean pathForm=true;
                     String filepath = chooser.getSelectedFile().getAbsolutePath();
                     System.out.println(filepath);
@@ -350,4 +361,44 @@ public class ChessGameFrame extends JFrame {
 //        }
 //    }
 //
+    public void addChangeBackground(){
+
+        JButton changeBackground = new JButton("change background");
+        changeBackground.setLocation(HEIGTH, HEIGTH / 10 +480 );
+        changeBackground.setSize(200, 60);
+        add(changeBackground);
+
+
+
+
+        changeBackground.addActionListener(e -> {JFileChooser chooser = new JFileChooser();
+            chooser.setMultiSelectionEnabled(false); // 设为多选
+            int returnVal = chooser.showOpenDialog(changeBackground); // 是否打开文件选择框，选择保存是0，退出和1
+
+
+            if (returnVal == JFileChooser.APPROVE_OPTION) { //点击确定
+                remove(jb);
+                repaint();
+                String filepath = chooser.getSelectedFile().getAbsolutePath();
+                System.out.println(filepath);
+
+                System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
+                String path =filepath;
+                System.out.println(path);
+
+                ImageIcon imag=new ImageIcon(path);
+
+
+                Image image=imag.getImage();
+                Image doSomImage=image.getScaledInstance(WIDTH,HEIGTH,Image.SCALE_FAST);
+                ImageIcon tureBackgroundd = new ImageIcon(doSomImage);
+
+                 jb=new JLabel(tureBackgroundd);
+                jb.setBounds(0,0,getWidth(),getHeight());
+                add(jb);
+                jb.repaint();
+
+            }});
+
+}
 }

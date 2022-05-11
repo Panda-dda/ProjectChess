@@ -45,6 +45,17 @@ public class Chessboard extends JComponent {
 
     private JLabel lable;
 
+
+
+
+
+
+
+
+
+
+
+
     public void setLable(JLabel lable) {
         this.lable = lable;
     }
@@ -63,8 +74,12 @@ public class Chessboard extends JComponent {
         CHESS_SIZE = width / 8;
         System.out.printf("chessboard size = %d, chess size = %d\n", width, CHESS_SIZE);
 
+
+
+
         initiateEmptyChessboard();
         Init();
+
     }
     public void Init(){
         // FIXME: Initialize chessboard for testing only.
