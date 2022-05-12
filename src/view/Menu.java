@@ -8,39 +8,90 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
-    public class Menu extends JFrame implements ActionListener {
-        private JButton Game_Start;
+public class Menu extends JFrame implements ActionListener {
+        private JButton buttonStart;
 
-        private JButton Game_Over;
+        private JButton buttonOver;
+
+        private JLabel jb;
+    BufferedImage bg = null;
+
+
+
+        ImageIcon image;
 
         public Menu(){
 
-//定义按钮的排列方式
 
-            setLayout(new FlowLayout());
+//定义按钮的排列方式
+            setLocationRelativeTo(null);
 
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-            this.setSize(300,200);
+            this.setSize(400,400);
 
             this.setLocation(300,400);
+            setLayout(null);
 
-            Game_Start = new JButton("Start");
+            buttonStart = new JButton("Start");
+            buttonStart.setSize(100,50);
+            buttonStart.setLocation(200,30);
 
-            Game_Over = new JButton("Out");
 
-            this.add(Game_Start);
+            buttonOver = new JButton("Over");
+            buttonOver.setSize(100,50);
+            buttonOver.setLocation(200,90);
 
-            this.add(Game_Over);
+            this.add(buttonStart);
 
-            Game_Start.addActionListener(this);
+            this.add(buttonOver);
 
-            Game_Over.addActionListener(this);
+            buttonStart.addActionListener(this);
 
+            buttonOver.addActionListener(this);
+            ImageIcon imag=new ImageIcon("images/background.png");
+//        JLabel jb=new JLabel(imag);
+//
+//        jb.setBounds(0,0,getWidth(),getHeight());
+//
+//        add(jb);
+
+            Image image=imag.getImage();
+            Image doSomImage=image.getScaledInstance(400,400,Image.SCALE_FAST);
+            ImageIcon tureBackground = new ImageIcon(doSomImage);
+
+            jb=new JLabel(tureBackground);
+            jb.setBounds(0,0,getWidth(),getHeight());
+            add(jb);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//
+//
+//
+//
             this.setVisible(true);
 
+
         }
+
+
+
 
 
 
@@ -62,19 +113,20 @@ import java.awt.event.ActionListener;
 
         public void actionPerformed(ActionEvent e) {
 
-            if(e.getSource() == Game_Start){
+            if(e.getSource() == buttonStart){
 
                 this.dispose();
-//                String file = "F:\\music.mp3";
-//                    Music play = new Music(file);
-//                    // 开启
-//                    play.start();
-//                    try {
-//                        Thread.sleep(100);
-//                    } catch (InterruptedException e1) {
-//                        e1.printStackTrace();
-//                    }
+                String file = "F:\\music.mp3";
+                    Music play = new Music(file);
+                    // 开启
+                    play.start();
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
 //                    System.out.println("stop!");
+//                取消打印
                     ChessGameFrame mainFrame = new ChessGameFrame(1000, 760);
                     mainFrame.setVisible(true);
 
@@ -96,7 +148,7 @@ import java.awt.event.ActionListener;
 
             }
 
-            if(e.getSource() == Game_Over){
+            if(e.getSource() == buttonOver){
 
                 this.dispose();
 

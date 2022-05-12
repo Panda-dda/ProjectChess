@@ -34,6 +34,8 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 import javazoom.jl.player.advanced.PlaybackEvent;
 import javazoom.jl.player.advanced.PlaybackListener;
 
+import static java.lang.Thread.sleep;
+
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -46,6 +48,7 @@ public class ChessGameFrame extends JFrame {
     public final int CHESSBOARD_SIZE;
     private GameController gameController;
     private JLabel jb;
+
 
 
 
@@ -102,6 +105,16 @@ public class ChessGameFrame extends JFrame {
         jb=new JLabel(tureBackground);
         jb.setBounds(0,0,getWidth(),getHeight());
         add(jb);
+//        String file = "F:\\music.mp3";
+//            Music play = new Music(file);
+//            // 开启
+//            play.start();
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            System.out.println("stop!");
 
 
 
@@ -129,7 +142,7 @@ public class ChessGameFrame extends JFrame {
     /**
      * 在游戏面板中添加标签
      */
-        JLabel statusLabel = new JLabel("Turn For BLACK");
+        JLabel statusLabel = new JLabel("Turn For White");
         statusLabel.setLocation(HEIGTH, HEIGTH / 10);
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
@@ -139,16 +152,16 @@ public class ChessGameFrame extends JFrame {
 
 
           JButton button = new JButton("Restart");
-            button.setLocation(HEIGTH, HEIGTH / 10 + 360);
+            button.setLocation(HEIGTH, HEIGTH / 10 + 240);
             button.setSize(200, 60);
             button.setFont(new Font("Rockwell", Font.BOLD, 20));
             add(button);
 
             button.addActionListener(e -> {
-                System.out.println("Click Restart");
+//                System.out.println("Click Restart");
                 int n=JOptionPane.showConfirmDialog(null,"Are you sure to restart","Confirm",JOptionPane.YES_NO_OPTION);
                 if (n==JOptionPane.YES_OPTION){
-                    chessboard.setCurrentColor(ChessColor.BLACK);
+                    chessboard.setCurrentColor(ChessColor.WHITE);
                     chessboard.Restarted();
                     System.out.printf("%d",chessboard.getA());
                     repaint();
@@ -166,7 +179,7 @@ public class ChessGameFrame extends JFrame {
 
 
         JButton button1 = new JButton("Store");
-        button1.setLocation(HEIGTH, HEIGTH / 10 + 120);
+        button1.setLocation(HEIGTH, HEIGTH / 10 + 80);
         button1.setSize(200, 60);
         button1.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button1);
@@ -217,14 +230,14 @@ public class ChessGameFrame extends JFrame {
 
 
         JButton buttonLoad = new JButton("Load");
-        buttonLoad.setLocation(HEIGTH, HEIGTH / 10 + 240);
+        buttonLoad.setLocation(HEIGTH, HEIGTH / 10 + 160);
         buttonLoad.setSize(200, 60);
         buttonLoad.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(buttonLoad);
 
 //        buttonLoad.addActionListener(e -> {
 //            System.out.println("Click load");
-//            String path = JOptionPane.showInputDialog(this,"Input Path here");
+//            String path = JOptionPane.showInputDialog(this,"Input Path here");   E://xxx.txt
 //            boolean pathForm=true;
 //
 //                if ((path.charAt(path.length()-3)!='t')||(path.charAt(path.length()-2)!='x')||(path.charAt(path.length()-1)!='t')){
@@ -251,16 +264,16 @@ public class ChessGameFrame extends JFrame {
                 JFileChooser chooser = new JFileChooser();
                 chooser.setMultiSelectionEnabled(false); // 设为多选
                 int returnVal = chooser.showOpenDialog(buttonLoad); // 是否打开文件选择框，选择保存是0，退出和1
-                System.out.println("returnVal=" + returnVal);
+//                System.out.println("returnVal=" + returnVal);
 
                 if (returnVal == JFileChooser.APPROVE_OPTION) { //点击确定
                     boolean pathForm=true;
                     String filepath = chooser.getSelectedFile().getAbsolutePath();
-                    System.out.println(filepath);
-
-                    System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
+//                    System.out.println(filepath);
+//
+//                    System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
                     String path =filepath;
-                    System.out.println(path);// 输出相对路径
+//                    System.out.println(path);// 输出相对路径
                      if ((path.charAt(path.length()-3)!='t')||(path.charAt(path.length()-2)!='x')||(path.charAt(path.length()-1)!='t')){
                          pathForm=false;
                          JOptionPane.showMessageDialog(null, "the message is not correct!", "Warnings", JOptionPane.WARNING_MESSAGE);
@@ -286,7 +299,7 @@ public class ChessGameFrame extends JFrame {
 
 
         JButton huiqi=new JButton("HuiQi");
-        huiqi.setLocation(HEIGTH, HEIGTH / 10 + 600);
+        huiqi.setLocation(HEIGTH, HEIGTH / 10 + 400);
         huiqi.setSize(200, 60);
         huiqi.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(huiqi);
@@ -303,9 +316,22 @@ public class ChessGameFrame extends JFrame {
             }
 
         });
+        JButton review = new JButton("Review");
+        review.setLocation(HEIGTH, HEIGTH / 10 + 480);
+        review.setSize(200, 60);
+        review.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(review);
+        review.addActionListener(e->{
+            int length=chessboard.getIntStoreHuiQI();
+            int a=0;
+            TestThread testThread = new TestThread(chessboard);
+            testThread.start();
 
+        });
 
     }
+
+
 
 
 //    private static   String savefile = "E:\\test.txt";
@@ -357,7 +383,7 @@ public class ChessGameFrame extends JFrame {
 
 
             } catch (IOException e) {
-                System.err.println("IO异常");
+//                System.err.println("IO异常");
                 e.printStackTrace();
             }
         }
@@ -383,11 +409,11 @@ public class ChessGameFrame extends JFrame {
 //            e.printStackTrace();
 //        }
 //    }
-//
+
     public void addChangeBackground(){
 
         JButton changeBackground = new JButton("change background");
-        changeBackground.setLocation(HEIGTH, HEIGTH / 10 +480 );
+        changeBackground.setLocation(HEIGTH, HEIGTH / 10 + 320 );
         changeBackground.setSize(200, 60);
         add(changeBackground);
 
@@ -403,11 +429,11 @@ public class ChessGameFrame extends JFrame {
                 remove(jb);
                 repaint();
                 String filepath = chooser.getSelectedFile().getAbsolutePath();
-                System.out.println(filepath);
+//                System.out.println(filepath);
 
-                System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
+//                System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
                 String path =filepath;
-                System.out.println(path);
+//                System.out.println(path);
 
                 ImageIcon imag=new ImageIcon(path);
 
@@ -424,4 +450,14 @@ public class ChessGameFrame extends JFrame {
             }});
 
 }
+
+
+
+
+
 }
+
+
+
+
+

@@ -36,16 +36,16 @@ public class Chessboard extends JComponent {
     private static final int CHESSBOARD_SIZE = 8;
 
     private final ChessComponent[][] chessComponents = new ChessComponent[CHESSBOARD_SIZE][CHESSBOARD_SIZE];
-    private ChessColor currentColor = ChessColor.BLACK;
+    private ChessColor currentColor = ChessColor.WHITE;
     //all chessComponents in this chessboard are shared only one model controller
     private final ClickController clickController = new ClickController(this);
     private final int CHESS_SIZE;
-    private ChessComponent[] chessForStore=new ChessComponent[32];
-
     private LinkedList<Record> huiQi=new LinkedList<>();
-
-
     private JLabel lable;
+
+
+    private JLabel jb;
+
 
 
 
@@ -60,6 +60,7 @@ public class Chessboard extends JComponent {
 
     public void setLable(JLabel lable) {
         this.lable = lable;
+
     }
     public void setRestarted(){
         initiateEmptyChessboard();
@@ -70,9 +71,10 @@ public class Chessboard extends JComponent {
         setLayout(null); // Use absolute layout.
         setSize(width, height);
         CHESS_SIZE = width / 8;
-        System.out.printf("chessboard size = %d, chess size = %d\n", width, CHESS_SIZE);
-        initiateEmptyChessboard();
+//        System.out.printf("chessboard size = %d, chess size = %d\n", width, CHESS_SIZE); //取消打印数据
+    initiateEmptyChessboard();
         Init();
+
 
     }
     public void Init(){
@@ -141,7 +143,7 @@ public class Chessboard extends JComponent {
             initPawnOnBoard(1,i,ChessColor.BLACK);
 
         }
-        lable.setText("Turn For Black");
+        lable.setText("Turn For White");
         storeHuiQI.add(theStore());
 
     }
@@ -171,6 +173,8 @@ public class Chessboard extends JComponent {
     public void swapChessComponents(ChessComponent chess1, ChessComponent chess2) {
         // Note that chess1 has higher priority, 'destroys' chess2 if exists.
 
+        SoundOfChess play0 = new SoundOfChess("D:\\新建文件夹\\下棋.mp3");
+        play0.start();
 
 
 
@@ -195,21 +199,21 @@ public class Chessboard extends JComponent {
 //        record.setStart(chess1.getChessboardPoint());
 //        record.setEnd(chess2.getChessboardPoint());
 //        record.setBeingEaten(chess2); huiQi.add(record);
-        SoundOfChess play0 = new SoundOfChess("D:\\新建文件夹\\下棋.mp3");
-        play0.start();
+
         chess1.repaint();
         chess2.repaint();
 
+
         a++;
         if (a%2==0){
-            lable.setText("Turn For White");
+            lable.setText("Turn For Black");
         }
         else {
-            lable.setText("Turn For Black");
+            lable.setText("Turn For White");
         }
 
         storeHuiQI.add(theStore());
-        System.out.println(theStore());
+//        System.out.println(theStore());  //打印存储文件
 
     }
 
@@ -328,7 +332,7 @@ public class Chessboard extends JComponent {
             }
             a = chessData.get(8).charAt(0) - '0';
 
-            if (a % 2 == 0) {
+            if (a % 2 == 1) {
                 setCurrentColor(ChessColor.WHITE);
                 lable.setText("Turn For White");
             } else {
@@ -346,7 +350,7 @@ public class Chessboard extends JComponent {
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     char theSimpleChess = chessData[i].charAt(j);
-                    ChessComponent chess = chessComponents[i][j];
+
                     ChessboardPoint point = new ChessboardPoint(i, j);
 
                     if (theSimpleChess == 'R') {
@@ -391,7 +395,7 @@ public class Chessboard extends JComponent {
             }
             a = chessData[8].charAt(0) - '0';
 
-            if (a % 2 == 0) {
+            if (a % 2 == 1) {
                 setCurrentColor(ChessColor.WHITE);
                 lable.setText("Turn For White");
             } else {
@@ -537,7 +541,17 @@ public class Chessboard extends JComponent {
     public int getIntStoreHuiQI() {
         return storeHuiQI.size();
     }
+
+    public String HUiFang(int a){
+        String rereview = storeHuiQI.get(a);
+
+        return rereview;
+
+
+    }
 }
+
+
 
 
 
