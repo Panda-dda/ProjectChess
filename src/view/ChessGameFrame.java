@@ -147,8 +147,8 @@ public class ChessGameFrame extends JFrame {
         JLabel statusLabel = new JLabel("Turn For White");
         statusLabel.setLocation(HEIGTH, HEIGTH / 10);
         statusLabel.setSize(200, 60);
-        statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
-        statusLabel.setForeground(Color.red);
+        statusLabel.setFont(new Font("Rockwell", Font.BOLD, 25));
+        statusLabel.setForeground(chessboard.getColor());
         add(statusLabel);
         chessboard.setLable(statusLabel);
 

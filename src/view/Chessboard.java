@@ -50,6 +50,9 @@ public class Chessboard extends JComponent {
     private boolean theChessName=true;
 
 
+    private Color color;
+
+
 
 
 
@@ -77,6 +80,7 @@ public class Chessboard extends JComponent {
 //        System.out.printf("chessboard size = %d, chess size = %d\n", width, CHESS_SIZE); //取消打印数据
         initiateEmptyChessboard();
         Init();
+        color=new Color(10,100,255);
 
 
     }
@@ -342,7 +346,7 @@ public class Chessboard extends JComponent {
             } else {
                 setCurrentColor(ChessColor.BLACK);
                 lable.setText("Turn For Black");
-                lable.setForeground(Color.red);
+                lable.setForeground(color);
             }
 
         }
@@ -404,11 +408,11 @@ public class Chessboard extends JComponent {
             if (a % 2 == 1) {
                 setCurrentColor(ChessColor.WHITE);
                 lable.setText("Turn For White");
-                lable.setForeground(Color.red);
+                lable.setForeground(color);
             } else {
                 setCurrentColor(ChessColor.BLACK);
                 lable.setText("Turn For Black");
-                lable.setForeground(Color.red);
+                lable.setForeground(color);
             }
 
 
@@ -432,6 +436,7 @@ public class Chessboard extends JComponent {
     }
     public String theStore(){
 
+        storeHuiQI.clear();
         String theStringStore="";
         for (int i=0;i<8;i++){
             for (int j=0;j<8;j++){
@@ -544,6 +549,10 @@ public class Chessboard extends JComponent {
 
     }
 
+
+    public Color getColor() {
+        return color;
+    }
 
     public int getIntStoreHuiQI() {
         return storeHuiQI.size();
