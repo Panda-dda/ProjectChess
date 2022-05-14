@@ -11,6 +11,7 @@ import java.awt.*;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -282,7 +283,9 @@ public class Chessboard extends JComponent {
     }
 
     public void loadGame(List<String> chessData) {
+        storeHuiQI.clear();
         boolean test = theLoadTest( chessData);
+
 
         if(!test){
                 loadTest=false;
@@ -353,7 +356,7 @@ public class Chessboard extends JComponent {
         storeHuiQI.add(theStore());
     }
     public void HuiQIGame(String[] chessData) {
-
+            int pp=0;
             initiateEmptyChessboard();
 //            chessData.forEach(System.out::println);
             for (int i = 0; i < 8; i++) {
@@ -403,7 +406,9 @@ public class Chessboard extends JComponent {
                 }
             }
             for (int i=0;i<chessData[8].length();i++){
-            a += chessData[8].charAt(i) - '0';}
+                pp+=chessData[8].charAt(i)-'0';
+            }
+            a = pp;
 
             if (a % 2 == 1) {
                 setCurrentColor(ChessColor.WHITE);
@@ -436,7 +441,7 @@ public class Chessboard extends JComponent {
     }
     public String theStore(){
 
-        storeHuiQI.clear();
+
         String theStringStore="";
         for (int i=0;i<8;i++){
             for (int j=0;j<8;j++){

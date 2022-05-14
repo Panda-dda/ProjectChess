@@ -141,9 +141,11 @@ public abstract class ChessComponent extends JComponent {
 
 
 
-
-
-
 //        g.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
+
+
+
+
+
 }
