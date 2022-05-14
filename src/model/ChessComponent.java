@@ -3,15 +3,21 @@ package model;
 import view.ChessboardPoint;
 import controller.ClickController;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 
 /**
  * 这个类是一个抽象类，主要表示8*8棋盘上每个格子的棋子情况，当前有两个子类继承它，分别是EmptySlotComponent(空棋子)和RookChessComponent(车)。
  */
 public abstract class ChessComponent extends JComponent {
+    private Image image1;
+    private Image image2;
 
     /**
      * CHESSGRID_SIZE: 主要用于确定每个棋子在页面中显示的大小。
@@ -47,6 +53,12 @@ public abstract class ChessComponent extends JComponent {
         this.chessColor = chessColor;
         this.selected = false;
         this.clickController = clickController;
+        try {
+            image1=ImageIO.read(new File("./images/slave.png"));
+            image2=ImageIO.read(new File("./images/gold.png"));
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public ChessboardPoint getChessboardPoint() {
@@ -118,8 +130,20 @@ public abstract class ChessComponent extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponents(g);
 //        System.out.printf("repaint chess [%d,%d]\n", chessboardPoint.getX(), chessboardPoint.getY()); //取消打印
-        Color squareColor = BACKGROUND_COLORS[(chessboardPoint.getX() + chessboardPoint.getY()) % 2];
-        g.setColor(squareColor);
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+//        Color squareColor = BACKGROUND_COLORS[(chessboardPoint.getX() + chessboardPoint.getY()) % 2];
+//        g.setColor(squareColor);
+        if ((chessboardPoint.getX()+chessboardPoint.getY())%2==0){
+            g.drawImage(image1, 0,0,this.getWidth(),this.getHeight() ,this);
+        }
+        else {
+            g.drawImage(image2, 0,0,this.getWidth(),this.getHeight() ,this);
+        }
+
+
+
+
+
+
+//        g.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
 }

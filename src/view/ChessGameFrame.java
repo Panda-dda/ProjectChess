@@ -63,6 +63,7 @@ public class ChessGameFrame extends JFrame {
         this.CHESSBOARD_SIZE = HEIGTH * 4 / 5;
 
 
+
 //        int fraWidth=this.getWidth();
 //        int fraHeight=this.getHeight();
 //        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -91,7 +92,7 @@ public class ChessGameFrame extends JFrame {
         addChessboard();
 
 
-        ImageIcon imag=new ImageIcon("images/background.png");
+        ImageIcon imag=new ImageIcon("images/back5.png");
 //        JLabel jb=new JLabel(imag);
 //
 //        jb.setBounds(0,0,getWidth(),getHeight());
@@ -103,6 +104,7 @@ public class ChessGameFrame extends JFrame {
         ImageIcon tureBackground = new ImageIcon(doSomImage);
 
         jb=new JLabel(tureBackground);
+
         jb.setBounds(0,0,getWidth(),getHeight());
         add(jb);
 //        String file = "F:\\music.mp3";
@@ -146,7 +148,7 @@ public class ChessGameFrame extends JFrame {
         statusLabel.setLocation(HEIGTH, HEIGTH / 10);
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
-
+        statusLabel.setForeground(Color.red);
         add(statusLabel);
         chessboard.setLable(statusLabel);
 
@@ -163,7 +165,7 @@ public class ChessGameFrame extends JFrame {
                 if (n==JOptionPane.YES_OPTION){
                     chessboard.setCurrentColor(ChessColor.WHITE);
                     chessboard.Restarted();
-                    System.out.printf("%d",chessboard.getA());
+//                    System.out.printf("%d",chessboard.getA());
                     repaint();
 
                 }
@@ -276,7 +278,7 @@ public class ChessGameFrame extends JFrame {
 //                    System.out.println(path);// 输出相对路径
                      if ((path.charAt(path.length()-3)!='t')||(path.charAt(path.length()-2)!='x')||(path.charAt(path.length()-1)!='t')){
                          pathForm=false;
-                         JOptionPane.showMessageDialog(null, "the message is not correct!", "Warnings", JOptionPane.WARNING_MESSAGE);
+                         JOptionPane.showMessageDialog(null, "文件格式错误（错误编码：104）", "Warnings", JOptionPane.WARNING_MESSAGE);
 
                 }
                      else {
@@ -289,7 +291,25 @@ public class ChessGameFrame extends JFrame {
                 repaint();
             }
             else {
-                JOptionPane.showMessageDialog(null, "the message is not correct!", "Warnings", JOptionPane.WARNING_MESSAGE);
+
+                if (!chessboard.isTheILength()&&chessboard.isTheChessName()&&chessboard.isTheInt()){
+                JOptionPane.showMessageDialog(null, "棋盘并非8*8", "Warnings", JOptionPane.WARNING_MESSAGE);
+                repaint();
+                    System.out.println(chessboard.isTheChessName());
+                    System.out.println(chessboard.isTheChessName());
+                    System.out.println(chessboard.isTheInt());
+            }
+                else if (!chessboard.isTheChessName()&&chessboard.isTheILength()&&chessboard.isTheInt()){
+                    JOptionPane.showMessageDialog(null, "棋子并非六种之一，棋子并非黑白棋子", "Warnings", JOptionPane.WARNING_MESSAGE);
+
+               repaint(); }
+                else if (!chessboard.isTheInt()&&chessboard.isTheChessName()&&chessboard.isTheILength()){
+                    JOptionPane.showMessageDialog(null, "缺少行棋方", "Warnings", JOptionPane.WARNING_MESSAGE);
+                repaint();}
+                else{
+                    JOptionPane.showMessageDialog(null, "多处存在问题", "Warnings", JOptionPane.WARNING_MESSAGE);
+                    repaint();}
+
             }
                 }}
 

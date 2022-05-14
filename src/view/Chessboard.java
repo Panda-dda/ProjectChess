@@ -45,6 +45,9 @@ public class Chessboard extends JComponent {
 
 
     private JLabel jb;
+    private boolean theInt=true;
+    private boolean theILength=true;
+    private boolean theChessName=true;
 
 
 
@@ -72,7 +75,7 @@ public class Chessboard extends JComponent {
         setSize(width, height);
         CHESS_SIZE = width / 8;
 //        System.out.printf("chessboard size = %d, chess size = %d\n", width, CHESS_SIZE); //取消打印数据
-    initiateEmptyChessboard();
+        initiateEmptyChessboard();
         Init();
 
 
@@ -335,9 +338,11 @@ public class Chessboard extends JComponent {
             if (a % 2 == 1) {
                 setCurrentColor(ChessColor.WHITE);
                 lable.setText("Turn For White");
+                lable.setForeground(Color.red);
             } else {
                 setCurrentColor(ChessColor.BLACK);
                 lable.setText("Turn For Black");
+                lable.setForeground(Color.red);
             }
 
         }
@@ -393,14 +398,17 @@ public class Chessboard extends JComponent {
                     }
                 }
             }
-            a = chessData[8].charAt(0) - '0';
+            for (int i=0;i<chessData[8].length();i++){
+            a += chessData[8].charAt(i) - '0';}
 
             if (a % 2 == 1) {
                 setCurrentColor(ChessColor.WHITE);
                 lable.setText("Turn For White");
+                lable.setForeground(Color.red);
             } else {
                 setCurrentColor(ChessColor.BLACK);
                 lable.setText("Turn For Black");
+                lable.setForeground(Color.red);
             }
 
 
@@ -477,10 +485,9 @@ public class Chessboard extends JComponent {
         return theStringStore.toString();
     }
     public boolean theLoadTest(List<String> chessData){//test the load is right or not ,
-                                                        //contains the length 8*8 ,the a--the turn,
-        boolean theInt=true;
-        boolean theILength=true;
-        boolean theChessName=true;
+          theILength=true;
+          theChessName=true;//contains the length 8*8 ,the a--the turn,
+          theInt=true;
 
         if (chessData.size()!=9){
             return  false;
@@ -548,6 +555,18 @@ public class Chessboard extends JComponent {
         return rereview;
 
 
+    }
+
+    public boolean isTheInt() {
+        return theInt;
+    }
+
+    public boolean isTheILength() {
+        return theILength;
+    }
+
+    public boolean isTheChessName() {
+        return theChessName;
     }
 }
 

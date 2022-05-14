@@ -51,7 +51,7 @@ public class Menu extends JFrame implements ActionListener {
             buttonStart.addActionListener(this);
 
             buttonOver.addActionListener(this);
-            ImageIcon imag=new ImageIcon("images/background.png");
+            ImageIcon imag=new ImageIcon("images/back2.png");
 //        JLabel jb=new JLabel(imag);
 //
 //        jb.setBounds(0,0,getWidth(),getHeight());
