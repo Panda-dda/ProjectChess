@@ -146,15 +146,19 @@ public class ChessGameFrame extends JFrame {
             add(button);
 
             button.addActionListener(e -> {
+                if (chessboard.avoidBugChessOnChick()==false){
+                    JOptionPane.showMessageDialog(null,"请先取消选中");
+                }
 //                System.out.println("Click Restart");
-                int n=JOptionPane.showConfirmDialog(null,"Are you sure to restart","Confirm",JOptionPane.YES_NO_OPTION);
+                else
+                {int n=JOptionPane.showConfirmDialog(null,"Are you sure to restart","Confirm",JOptionPane.YES_NO_OPTION);
                 if (n==JOptionPane.YES_OPTION){
                     chessboard.setCurrentColor(ChessColor.WHITE);
                     chessboard.Restarted();
 //                    System.out.printf("%d",chessboard.getA());
                     repaint();
 
-                }
+                }}
             });
 
 

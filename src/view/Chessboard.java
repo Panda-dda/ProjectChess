@@ -128,9 +128,20 @@ public class Chessboard extends JComponent {
 
 
     public void Restarted(){
+//        for(int i=0;i<8;i++){
+//            for (int j = 0; j < 8; j++) {
+//
+//                clickController.onClick();
+//
+//
+//            }
+//        }
+
 
         storeHuiQI.clear();
         a=1;
+
+
         removeAll();
         initiateEmptyChessboard();
         initRookOnBoard(0, 0, ChessColor.BLACK);
@@ -164,6 +175,8 @@ public class Chessboard extends JComponent {
         jb.setText("Round: 0");
         storeHuiQI.add(theStore());
         chessboardBlock();
+
+
 
     }
 
@@ -640,6 +653,25 @@ public class Chessboard extends JComponent {
 
 
 
+    }
+
+    public boolean avoidBugChessOnChick(){
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+               if (chessComponents[i][j].isSelected()==true){
+                   return false;
+               }
+            }
+        }
+        return true;
+    }
+
+    public void stopClick(){
+        for (int i=0;i<8;i++){
+            for (int j=0;j<8;j++){
+                chessComponents[i][j].setSelected(false);
+            }
+        }
     }
 
 

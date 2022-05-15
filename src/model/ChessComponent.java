@@ -108,6 +108,7 @@ public abstract class ChessComponent extends JComponent {
         this.selected = selected;
     }
 
+
     /**
      * @param another 主要用于和另外一个棋子交换位置
      *                <br>
