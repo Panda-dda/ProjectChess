@@ -153,6 +153,15 @@ public abstract class ChessComponent extends JComponent {
      */
     public abstract void loadResource() throws IOException;
 
+
+    public Image getImage1() {
+        return image1;
+    }
+
+    public Image getImage2() {
+        return image2;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponents(g);
@@ -161,11 +170,13 @@ public abstract class ChessComponent extends JComponent {
 //        Color squareColor = BACKGROUND_COLORS[(chessboardPoint.getX() + chessboardPoint.getY()) % 2];
 //        g.setColor(squareColor);
         if ((chessboardPoint.getX()+chessboardPoint.getY())%2==0){
-            g.drawImage(image1, 0,0,this.getWidth(),this.getHeight() ,this);
+            g.drawImage(image1, 0,0,this.getWidth(),this.getHeight() ,null);
         }
         else {
-            g.drawImage(image2, 0,0,this.getWidth(),this.getHeight() ,this);
+            g.drawImage(image2, 0,0,this.getWidth(),this.getHeight() ,null);
         }
+
+
 
 
 

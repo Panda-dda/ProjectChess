@@ -47,6 +47,8 @@ public class Chessboard extends JComponent {
     private final int CHESS_SIZE;
     private LinkedList<Record> huiQi=new LinkedList<>();
     private JLabel lable;
+    private String pa1;
+    private String pa2;
 
 
 
@@ -82,6 +84,10 @@ public class Chessboard extends JComponent {
         initiateEmptyChessboard();
         Init();
         color=new Color(10,100,255);
+
+
+        pa1="./images/white11.png";
+        pa2="./images/blacksmall.png";
 
 
 
@@ -122,6 +128,7 @@ public class Chessboard extends JComponent {
 
 
     public void Restarted(){
+
         storeHuiQI.clear();
         a=1;
         removeAll();
@@ -156,6 +163,7 @@ public class Chessboard extends JComponent {
         lable.setText("Turn For White");
         jb.setText("Round: 0");
         storeHuiQI.add(theStore());
+        chessboardBlock();
 
     }
 
@@ -209,6 +217,7 @@ public class Chessboard extends JComponent {
 //        record.setEnd(chess2.getChessboardPoint());
 //        record.setBeingEaten(chess2); huiQi.add(record);
         SoundOfChess play0= new SoundOfChess("./Music/ChessSound.mp3");
+        chessboardBlock();
 
         play0.start();
         chess1.repaint();
@@ -287,6 +296,7 @@ public class Chessboard extends JComponent {
     }
 
     public void loadGame(List<String> chessData) {
+        chessboardBlock();
         storeHuiQI.clear();
         boolean test = theLoadTest( chessData);
 
@@ -361,6 +371,7 @@ public class Chessboard extends JComponent {
         storeHuiQI.add(theStore());
     }
     public void HuiQIGame(String[] chessData) {
+
             int pp=0;
             initiateEmptyChessboard();
 //            chessData.forEach(System.out::println);
@@ -426,6 +437,8 @@ public class Chessboard extends JComponent {
             }
 
             jb.setText("Round: "+a/2);
+        chessboardBlock();
+
 
 
 
@@ -593,22 +606,40 @@ public class Chessboard extends JComponent {
 
 
     public void change(String path,String pat){
+        pa1=path;
+        pa2=pat;
         for (int i=0;i<8;i++){
             for (int j = 0; j < 8; j++) {
                 try {
-               chessComponents[i][j].setImage1(ImageIO.read(new File(path)));
-               chessComponents[i][j].setImage2(ImageIO.read(new File(pat)));
+               chessComponents[i][j].setImage1(ImageIO.read(new File(pa1)));
+               chessComponents[i][j].setImage2(ImageIO.read(new File(pa2)));
 //            image3=ImageIO.read(new File("./images/yellow.png"));
             }catch(Exception e) {
                 e.printStackTrace();
             }
 
-
-
             }
         }
 
         repaint();
+    }
+    public void chessboardBlock(){
+        for (int i=0;i<8;i++){
+            for (int j = 0; j < 8; j++) {
+                try {
+                    chessComponents[i][j].setImage1(ImageIO.read(new File(pa1)));
+                    chessComponents[i][j].setImage2(ImageIO.read(new File(pa2)));
+//            image3=ImageIO.read(new File("./images/yellow.png"));
+                }catch(Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        repaint();
+
+
+
     }
 
 
