@@ -6,9 +6,11 @@ import javazoom.jl.player.Player;
 import model.*;
 import controller.ClickController;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
@@ -23,6 +25,8 @@ public class Chessboard extends JComponent {
     private int a=1;
     private boolean loadTest=true;
     ArrayList<String> storeHuiQI=new ArrayList<>();
+
+    private JLabel forRound;
     /**
      * CHESSBOARD_SIZE： 棋盘是8 * 8的
      * <br>
@@ -45,6 +49,7 @@ public class Chessboard extends JComponent {
     private JLabel lable;
 
 
+
     private JLabel jb;
     private boolean theInt=true;
     private boolean theILength=true;
@@ -56,14 +61,9 @@ public class Chessboard extends JComponent {
 
 
 
-
-
-
-
-
-
-
-
+    public void setJb(JLabel jb) {
+        this.jb = jb;
+    }
 
     public void setLable(JLabel lable) {
         this.lable = lable;
@@ -82,6 +82,8 @@ public class Chessboard extends JComponent {
         initiateEmptyChessboard();
         Init();
         color=new Color(10,100,255);
+
+
 
 
     }
@@ -152,6 +154,7 @@ public class Chessboard extends JComponent {
 
         }
         lable.setText("Turn For White");
+        jb.setText("Round: 0");
         storeHuiQI.add(theStore());
 
     }
@@ -181,8 +184,6 @@ public class Chessboard extends JComponent {
     public void swapChessComponents(ChessComponent chess1, ChessComponent chess2) {
         // Note that chess1 has higher priority, 'destroys' chess2 if exists.
 
-        SoundOfChess play0 = new SoundOfChess("D:\\新建文件夹\\下棋.mp3");
-        play0.start();
 
 
 
@@ -207,7 +208,9 @@ public class Chessboard extends JComponent {
 //        record.setStart(chess1.getChessboardPoint());
 //        record.setEnd(chess2.getChessboardPoint());
 //        record.setBeingEaten(chess2); huiQi.add(record);
+        SoundOfChess play0= new SoundOfChess("./Music/ChessSound.mp3");
 
+        play0.start();
         chess1.repaint();
         chess2.repaint();
 
@@ -219,6 +222,7 @@ public class Chessboard extends JComponent {
         else {
             lable.setText("Turn For White");
         }
+        jb.setText("Round: "+(a)/2);
 
         storeHuiQI.add(theStore());
 //        System.out.println(theStore());  //打印存储文件
@@ -345,12 +349,13 @@ public class Chessboard extends JComponent {
             if (a % 2 == 1) {
                 setCurrentColor(ChessColor.WHITE);
                 lable.setText("Turn For White");
-                lable.setForeground(Color.red);
+                lable.setForeground(color);
             } else {
                 setCurrentColor(ChessColor.BLACK);
                 lable.setText("Turn For Black");
                 lable.setForeground(color);
             }
+            jb.setText("Round: "+a/2);
 
         }
         storeHuiQI.add(theStore());
@@ -419,6 +424,9 @@ public class Chessboard extends JComponent {
                 lable.setText("Turn For Black");
                 lable.setForeground(color);
             }
+
+            jb.setText("Round: "+a/2);
+
 
 
     }
@@ -582,6 +590,36 @@ public class Chessboard extends JComponent {
     public boolean isTheChessName() {
         return theChessName;
     }
+
+
+    public void change(String path,String pat){
+        for (int i=0;i<8;i++){
+            for (int j = 0; j < 8; j++) {
+                try {
+               chessComponents[i][j].setImage1(ImageIO.read(new File(path)));
+               chessComponents[i][j].setImage2(ImageIO.read(new File(pat)));
+//            image3=ImageIO.read(new File("./images/yellow.png"));
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+
+
+
+            }
+        }
+
+        repaint();
+    }
+
+
+
+//    public void printtt(){
+//        for (int i = 0; i < 8; i++) {
+//            for (int j=0;j<8;j++){
+//                ches
+//            }
+//        }
+//    }
 }
 
 
@@ -613,6 +651,8 @@ class SoundOfChess extends Thread{
         player = new Player(buffer);
         player.play();
     }
+
+
 
 
 

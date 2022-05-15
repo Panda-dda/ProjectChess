@@ -19,6 +19,11 @@ public abstract class ChessComponent extends JComponent {
     private Image image1;
     private Image image2;
 
+    private Image image3;
+
+
+
+
     /**
      * CHESSGRID_SIZE: 主要用于确定每个棋子在页面中显示的大小。
      * <br>
@@ -29,6 +34,9 @@ public abstract class ChessComponent extends JComponent {
 
     private static final Dimension CHESSGRID_SIZE = new Dimension(1080 / 4 * 3 / 8, 1080 / 4 * 3 / 8);
     private static final Color[] BACKGROUND_COLORS = {Color.WHITE, Color.BLACK};
+
+
+    private boolean whetherMoveTo;
     /**
      * handle click event
      */
@@ -54,11 +62,14 @@ public abstract class ChessComponent extends JComponent {
         this.selected = false;
         this.clickController = clickController;
         try {
-            image1=ImageIO.read(new File("./images/slave.png"));
-            image2=ImageIO.read(new File("./images/gold.png"));
+            image1=ImageIO.read(new File("./images/white11.png"));
+            image2=ImageIO.read(new File("./images/blacksmall.png"));
+//            image3=ImageIO.read(new File("./images/yellow.png"));
         }catch(Exception e) {
             e.printStackTrace();
         }
+
+        this.whetherMoveTo=false;
     }
 
     public ChessboardPoint getChessboardPoint() {
@@ -76,6 +87,22 @@ public abstract class ChessComponent extends JComponent {
     public boolean isSelected() {
         return selected;
     }
+
+    public void setImage1(Image image1) {
+        this.image1 = image1;
+    }
+
+    public void setImage2(Image image2) {
+        this.image2 = image2;
+    }
+    //    public void WheMoveTo(ChessComponent chessComponent){
+//        for(int i=0;i<8;i++){
+//            for (int j=0;j<8;j++){
+//
+//            }
+//        }
+
+//    }
 
     public void setSelected(boolean selected) {
         this.selected = selected;
@@ -129,6 +156,7 @@ public abstract class ChessComponent extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponents(g);
+
 //        System.out.printf("repaint chess [%d,%d]\n", chessboardPoint.getX(), chessboardPoint.getY()); //取消打印
 //        Color squareColor = BACKGROUND_COLORS[(chessboardPoint.getX() + chessboardPoint.getY()) % 2];
 //        g.setColor(squareColor);
@@ -141,8 +169,10 @@ public abstract class ChessComponent extends JComponent {
 
 
 
+
 //        g.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
+
 
 
 
