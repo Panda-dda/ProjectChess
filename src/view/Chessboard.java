@@ -367,7 +367,13 @@ public class Chessboard extends JComponent {
                     }
                 }
             }
-            a = chessData.get(8).charAt(0) - '0';
+
+            String nn="";
+            for(int i=0;i<chessData.get(8).length();i++){
+                nn+=chessData.get(8).charAt(i);
+            }
+
+            a = Integer.parseInt(nn);
 
             if (a % 2 == 1) {
                 setCurrentColor(ChessColor.WHITE);
