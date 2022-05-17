@@ -1,5 +1,6 @@
 package model;
 
+import controller.MoveController;
 import view.ChessboardPoint;
 import controller.ClickController;
 
@@ -42,6 +43,8 @@ public abstract class ChessComponent extends JComponent {
      */
     private ClickController clickController;
 
+    private MoveController moveController;
+
     /**
      * chessboardPoint: 表示8*8棋盘中，当前棋子在棋格对应的位置，如(0, 0), (1, 0), (0, 7),(7, 7)等等
      * <br>
@@ -52,15 +55,18 @@ public abstract class ChessComponent extends JComponent {
     private ChessboardPoint chessboardPoint;
     protected final ChessColor chessColor;
     private boolean selected;
+    private boolean forMoveWatch;
 
-    protected ChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size) {
+    protected ChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size,MoveController moveController) {
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
         setLocation(location);
         setSize(size, size);
         this.chessboardPoint = chessboardPoint;
         this.chessColor = chessColor;
         this.selected = false;
+        this.forMoveWatch=false;
         this.clickController = clickController;
+        this.moveController=moveController;
         try {
             image1=ImageIO.read(new File("./images/white11.png"));
             image2=ImageIO.read(new File("./images/blacksmall.png"));
@@ -108,6 +114,13 @@ public abstract class ChessComponent extends JComponent {
         this.selected = selected;
     }
 
+    public boolean isForMoveWatch() {
+        return forMoveWatch;
+    }
+
+    public void setForMoveWatch(boolean forMoveWatch) {
+        this.forMoveWatch = forMoveWatch;
+    }
 
     /**
      * @param another 主要用于和另外一个棋子交换位置
@@ -136,7 +149,22 @@ public abstract class ChessComponent extends JComponent {
 //            System.out.printf("Click [%d,%d]\n", chessboardPoint.getX(), chessboardPoint.getY());  //取消打印
             clickController.onClick(this);
         }
+
+        if (e.getID()==MouseEvent.MOUSE_ENTERED){
+
+            moveController.MoveIn(this);
+        }
+        if (e.getID()==MouseEvent.MOUSE_EXITED){
+            moveController.MoveOut(this);
+        }
     }
+
+
+
+
+
+
+
 
     /**
      * @param chessboard  棋盘
@@ -176,13 +204,7 @@ public abstract class ChessComponent extends JComponent {
         else {
             g.drawImage(image2, 0,0,this.getWidth(),this.getHeight() ,null);
         }
-
-
-
-
-
-
-//        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        //        g.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
 
 
